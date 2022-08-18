@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { API } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
-// AmplifySignOut
 import { listTodos } from './graphql/queries';
 import { createTodo as createTodoMutation, deleteTodo as deleteTodoMutation } from './graphql/mutations';
 
@@ -59,7 +58,6 @@ function App() {
           ))
         }
       </div>
-//       <AmplifySignOut />
     </div>
   );
 }
