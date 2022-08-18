@@ -13,7 +13,7 @@ function App() {
   const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
-    GetTodo();
+    fetchNotes();
   }, []);
 
   async function fetchNotes() {
@@ -54,7 +54,7 @@ function App() {
             <div key={note.id || note.name}>
               <h2>{note.name}</h2>
               <p>{note.description}</p>
-              <button onClick={() => deleteTodo(note)}>Delete note</button>
+              <button onClick={() => deleteNote(note)}>Delete note</button>
             </div>
           ))
         }
