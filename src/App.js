@@ -4,7 +4,7 @@ import { API } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 // AmplifySignOut
 import { listTodos } from './graphql/queries';
-import { createNote as createTodoMutation, deleteNote as deleteTodoMutation } from './graphql/mutations';
+import { createTodo as createTodoMutation, deleteTodo as deleteTodoMutation } from './graphql/mutations';
 
 const initialFormState = { name: '', description: '' }
 
@@ -13,17 +13,17 @@ function App() {
   const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
-    fetchNotes();
+    GetTodo();
   }, []);
 
   async function fetchNotes() {
-    const apiData = await API.graphql({ query: listNotes });
-    setNotes(apiData.data.listNotes.items);
+    const apiData = await API.graphql({ query: listTodos });
+    setNotes(apiData.data.listTodos.items);
   }
 
   async function createNote() {
     if (!formData.name || !formData.description) return;
-    await API.graphql({ query: createNoteMutation, variables: { input: formData } });
+    await API.graphql({ query: createTodoMutation, variables: { input: formData } });
     setNotes([ ...notes, formData ]);
     setFormData(initialFormState);
   }
@@ -31,7 +31,7 @@ function App() {
   async function deleteNote({ id }) {
     const newNotesArray = notes.filter(note => note.id !== id);
     setNotes(newNotesArray);
-    await API.graphql({ query: deleteNoteMutation, variables: { input: { id } }});
+    await API.graphql({ query: deleteTodoMutation, variables: { input: { id } }});
   }
 
   return (
@@ -54,7 +54,7 @@ function App() {
             <div key={note.id || note.name}>
               <h2>{note.name}</h2>
               <p>{note.description}</p>
-              <button onClick={() => deleteNote(note)}>Delete note</button>
+              <button onClick={() => deleteTodo(note)}>Delete note</button>
             </div>
           ))
         }
